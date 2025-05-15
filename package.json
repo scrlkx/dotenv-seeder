@@ -1,22 +1,15 @@
 {
   "name": "dotenv-seeder",
   "version": "1.0.0",
-  "description": "",
-  "main": "sed.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scrlkx/dotenv-seeder.git"
+    "url": "https://github.com/scrlkx/dotenv-seeder.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/scrlkx/dotenv-seeder/issues"
   },
-  "homepage": "https://github.com/scrlkx/dotenv-seeder#readme",
+  "homepage": "https://github.com/scrlkx/dotenv-seeder",
   "dependencies": {
     "@actions/core": "^1.11.1",
     "dotenv": "^16.4.7",

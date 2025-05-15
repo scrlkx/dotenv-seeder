@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ncc
+        run: npm install -g @vercel/ncc
+
+      - name: Build with ncc
+        run: npx ncc build src/index.js -o dist
+
+      - name: Commit the update
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "dist/**"
+          add_options: "-f"
+          commit_message: "build: automatic build"
+          commit_author: "Author <actions@github.com>"

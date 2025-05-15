@@ -1,18 +1,20 @@
 name: "dotenv Seeder"
-description: "A GitHub Action to seed environment variables in a .env file using sed."
-author: "scrlkx"
+description: "A GitHub Action to seed environment variables in a environment file using sed."
+author: "scrlkx <me@scrlkx.com>"
+
 inputs:
   target:
-    description: "The target .env file to update (e.g., .env)"
+    description: "The target environment file to update (e.g., .env)"
     required: false
     default: ".env"
   example:
-    description: "The example .env file to copy from (e.g., .env.example)"
+    description: "The example environment file to copy from (e.g., .env.example)"
     required: false
     default: ".env.example"
   variables:
-    description: "JSON object of variables to replace in the .env file"
+    description: "JSON object of variables to replace in the environment file"
     required: true
+
 runs:
   using: "node20"
-  main: index.js
+  main: "dist/index.js"
