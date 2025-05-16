@@ -32,11 +32,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install ncc
-        run: npm install -g @vercel/ncc
-
-      - name: Build with ncc
-        run: npx ncc build src/index.js -o dist
+      - name: Build
+        run: npm run build
 
       - name: Commit the update
         uses: stefanzweifel/git-auto-commit-action@v5
