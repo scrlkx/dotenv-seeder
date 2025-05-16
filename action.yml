@@ -1,5 +1,5 @@
 name: "dotenv Seeder"
-description: "A GitHub Action to seed environment variables in a environment file using sed."
+description: "Seeds environment variables into a env file using JSON input."
 author: "scrlkx <me@scrlkx.com>"
 
 inputs:
