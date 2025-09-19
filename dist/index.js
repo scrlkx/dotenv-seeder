@@ -69,8 +69,10 @@ try {
     const result = Object.assign(Object.assign({}, existent), input);
     const handledResult = Object.entries(result)
         .map(([key, value]) => {
-        // Wrap value in quotes if it contains spaces
-        const escapedValue = value.includes(" ") ? `"${value}"` : value;
+        // Wrap value in quotes if it contains special characters
+        const escapedValue = value.includes(" ") || value.includes("/")
+            ? `"${value}"`
+            : value;
         return `${key}=${escapedValue}`;
     })
         .join("\n");
