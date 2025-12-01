@@ -38,11 +38,12 @@ jobs:
 
 ## Inputs
 
-| Name        | Description                                                      | Required | Default        |
-| ----------- | ---------------------------------------------------------------- | -------- | -------------- |
-| `target`    | The environment file to update or create                         | No       | `.env`         |
-| `example`   | The template file to copy from if the target file does not exist | No       | `.env.example` |
-| `variables` | A JSON object containing environment variables to inject         | Yes      | —              |
+| Name          | Description                                                        | Required | Default        |
+| ------------- | ------------------------------------------------------------------ | -------- | -------------- |
+| `target`      | The environment file to update or create                           | No       | `.env`         |
+| `example`     | The template file to copy from if the target file does not exist   | No       | `.env.example` |
+| `variables`   | A JSON object containing environment variables to inject           | Yes      | —              |
+| `skipExample` | If true, does not use the example file to create the target file   | No       | False           |
 
 ## License
 

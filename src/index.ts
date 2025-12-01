@@ -2,6 +2,12 @@ import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as core from "@actions/core";
 
+const skipExample =
+    core.getBooleanInput("skipExample", {
+        required: false,
+        trimWhitespace: true,
+    }) || false;
+
 const target =
     core.getInput("target", {
         required: false,
@@ -12,7 +18,7 @@ const example =
     core.getInput("example", {
         required: false,
         trimWhitespace: true,
-    }) || ".env.example";
+    }) || (skipExample ? false : ".env.example");
 
 const variables = core.getInput("variables", {
     required: true,
@@ -20,7 +26,10 @@ const variables = core.getInput("variables", {
 });
 
 try {
-    if (!fs.existsSync(target)) {
+    const hasExample = example && fs.existsSync(example);
+    const hasTarget = target && fs.existsSync(target);
+
+    if (hasExample && !hasTarget) {
         console.log(`Copying ${example} to ${target}`);
         fs.copyFileSync(example, target);
     }
@@ -28,7 +37,7 @@ try {
     const input: Record<string, string> = JSON.parse(variables);
 
     // Load the existing environment file (if it exists)
-    const existent = fs.existsSync(target)
+    const existent = hasTarget
         ? dotenv.parse(fs.readFileSync(target, "utf-8"))
         : {};
 
