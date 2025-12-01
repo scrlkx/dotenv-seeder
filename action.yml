@@ -14,6 +14,9 @@ inputs:
   variables:
     description: "JSON object of variables to replace in the environment file"
     required: true
+  skipExample:
+    description: "If true, does not use the example file to create the target file"
+    required: false
 
 runs:
   using: "node20"

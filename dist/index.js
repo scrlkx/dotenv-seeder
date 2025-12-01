@@ -43,6 +43,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const fs = __importStar(__nccwpck_require__(9896));
 const dotenv = __importStar(__nccwpck_require__(8889));
 const core = __importStar(__nccwpck_require__(7484));
+const skipExample = core.getBooleanInput("skipExample", {
+    required: false,
+    trimWhitespace: true,
+}) || false;
 const target = core.getInput("target", {
     required: false,
     trimWhitespace: true,
@@ -50,19 +54,21 @@ const target = core.getInput("target", {
 const example = core.getInput("example", {
     required: false,
     trimWhitespace: true,
-}) || ".env.example";
+}) || (skipExample ? false : ".env.example");
 const variables = core.getInput("variables", {
     required: true,
     trimWhitespace: false,
 });
 try {
-    if (!fs.existsSync(target)) {
+    const hasExample = example && fs.existsSync(example);
+    const hasTarget = target && fs.existsSync(target);
+    if (hasExample && !hasTarget) {
         console.log(`Copying ${example} to ${target}`);
         fs.copyFileSync(example, target);
     }
     const input = JSON.parse(variables);
     // Load the existing environment file (if it exists)
-    const existent = fs.existsSync(target)
+    const existent = hasTarget
         ? dotenv.parse(fs.readFileSync(target, "utf-8"))
         : {};
     // Merge existing variables with new ones
