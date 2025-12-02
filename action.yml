@@ -17,6 +17,7 @@ inputs:
   skipExample:
     description: "If true, does not use the example file to create the target file"
     required: false
+    default: "false"
 
 runs:
   using: "node20"
