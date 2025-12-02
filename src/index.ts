@@ -26,10 +26,7 @@ const variables = core.getInput("variables", {
 });
 
 try {
-    const hasExample = example && fs.existsSync(example);
-    const hasTarget = target && fs.existsSync(target);
-
-    if (hasExample && !hasTarget) {
+    if (!skipExample && example) {
         console.log(`Copying ${example} to ${target}`);
         fs.copyFileSync(example, target);
     }
@@ -37,7 +34,7 @@ try {
     const input: Record<string, string> = JSON.parse(variables);
 
     // Load the existing environment file (if it exists)
-    const existent = hasTarget
+    const existent = fs.existsSync(target)
         ? dotenv.parse(fs.readFileSync(target, "utf-8"))
         : {};
 
