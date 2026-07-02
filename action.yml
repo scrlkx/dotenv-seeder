@@ -3,22 +3,26 @@ description: "Seeds environment variables into a env file using JSON input."
 author: "scrlkx <me@scrlkx.com>"
 
 inputs:
-  target:
-    description: "The target environment file to update (e.g., .env)"
+  mode:
+    description: >
+      How the target file is seeded. "copy-example" (default) copies the example
+      file to the target before applying variables (the example file must exist).
+      "only-create" writes/updates the target file directly without requiring or
+      copying an example file.
     required: false
-    default: ".env"
+    default: "copy-example"
   example:
     description: "The example environment file to copy from (e.g., .env.example)"
     required: false
     default: ".env.example"
+  target:
+    description: "The target environment file to update (e.g., .env)"
+    required: false
+    default: ".env"
   variables:
     description: "JSON object of variables to replace in the environment file"
     required: true
-  skipExample:
-    description: "If true, does not use the example file to create the target file"
-    required: false
-    default: "false"
 
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"

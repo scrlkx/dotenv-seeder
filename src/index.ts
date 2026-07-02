@@ -2,11 +2,17 @@ import * as fs from "fs";
 import * as dotenv from "dotenv";
 import * as core from "@actions/core";
 
-const skipExample =
-    core.getBooleanInput("skipExample", {
+const mode =
+    core.getInput("mode", {
         required: false,
         trimWhitespace: true,
-    }) || false;
+    }) || "copy-example";
+
+const example =
+    core.getInput("example", {
+        required: false,
+        trimWhitespace: true,
+    }) || ".env.example";
 
 const target =
     core.getInput("target", {
@@ -14,21 +20,19 @@ const target =
         trimWhitespace: true,
     }) || ".env";
 
-const example =
-    core.getInput("example", {
-        required: false,
-        trimWhitespace: true,
-    }) || (skipExample ? false : ".env.example");
-
 const variables = core.getInput("variables", {
     required: true,
     trimWhitespace: false,
 });
 
 try {
-    if (!skipExample && example) {
+    if (mode === "copy-example") {
         console.log(`Copying ${example} to ${target}`);
         fs.copyFileSync(example, target);
+    } else if (mode !== "only-create") {
+        throw new Error(
+            `Invalid mode "${mode}". Expected "copy-example" or "only-create".`,
+        );
     }
 
     const input: Record<string, string> = JSON.parse(variables);
